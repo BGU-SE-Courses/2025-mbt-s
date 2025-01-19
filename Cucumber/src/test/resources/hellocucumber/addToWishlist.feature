@@ -17,6 +17,8 @@ Feature: Add Products to Wishlist with Quantity
     And I should see a confirmation message "Product added to wishlist"
 
   Scenario: Add multiple products to the wishlist with different quantities
+    Given I am a registered user
+    And I am signed in to my account
     When I add the following products to my wishlist:
       | Product Name | Quantity |
       | Laptop       | 1        |
