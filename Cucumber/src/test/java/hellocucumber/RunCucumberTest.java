@@ -21,20 +21,20 @@ public class RunCucumberTest {
     public static WebDriver driver;
     public static WebDriverWait wait;  // wait until done loading
 
-    public void initSessionAsUser(String webDriver, String webDriverPath) {
+    public static void initSessionAsUser(String webDriver, String webDriverPath) {
         System.setProperty(webDriver, webDriverPath);
-        this.driver = new ChromeDriver();
-        this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(40));
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 
-        this.driver.get("http://localhost:8080");
-        this.driver.manage().window().setPosition(new Point(700, 5));
+        driver.get("http://localhost:8080");
+        driver.manage().window().setPosition(new Point(700, 5));
 
-        System.out.println("Driver initialized for - " + this.driver.getTitle());
+        System.out.println("Driver initialized for - " + driver.getTitle());
     }
 
 
 
     public void closeSession() {
-        this.driver.quit();
+        driver.quit();
     }
 }
