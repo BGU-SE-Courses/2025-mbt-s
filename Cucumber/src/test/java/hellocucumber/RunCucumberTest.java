@@ -13,15 +13,17 @@ import java.time.Duration;
 
 import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 
-@Suite
-@IncludeEngines("cucumber")
-@SelectClasspathResource("hellocucumber")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
+// This is the test runner file
+@Suite  // Marks the class as a JUnit 5 test suite. It tells JUnit that this class should run a suite of tests.
+@IncludeEngines("cucumber")  // Specifies that the cucumber engine should be included. Cucumber integrates with JUnit using this engine.
+@SelectClasspathResource("hellocucumber")  // Specifies where to look for the feature files.
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")  // Configures a Cucumber plugin. The pretty plugin formats the test output to be more human-readable in the console.
+
 public class RunCucumberTest {
     public static WebDriver driver;
     public static WebDriverWait wait;  // wait until done loading
 
-    public void initSessionAsUser(String webDriver, String webDriverPath) {
+    public RunCucumberTest(String webDriver, String webDriverPath) {
         System.setProperty(webDriver, webDriverPath);
         this.driver = new ChromeDriver();
         this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(40));

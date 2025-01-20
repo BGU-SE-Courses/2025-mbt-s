@@ -13,11 +13,7 @@ import org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StepDefinitions {
-
-    private static final WebDriver driver = RunCucumberTest.driver;
-    private static final WebDriverWait wait = RunCucumberTest.wait;
-
-    
+    private WebDriver driver;
 
     // $$*TODO* explain what this step does$$
     @Given("an example scenario")
@@ -39,7 +35,8 @@ public class StepDefinitions {
 
     @Given("I am a registered user")
     public void iAmARegisteredUser() {
-        
+        // Registration logic: either programmatically register the user or pre-register manually
+        System.out.println("Assume the user is pre-registered.");
     }
 
     @And("I am signed in to my account")
