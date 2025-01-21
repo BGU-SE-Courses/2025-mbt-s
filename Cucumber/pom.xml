@@ -63,6 +63,31 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.7.0</version> <!-- You can update to the latest version -->
+        </dependency>
+
+        <!-- WebDriverManager (Optional, for automatic driver management) -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.3.0</version> <!-- You can update to the latest version -->
+        </dependency>
+
+        <!-- SLF4J for logging support in WebDriverManager -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version> <!-- or newer -->
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version> <!-- or newer -->
+        </dependency>
+
     </dependencies>
 
     <build>

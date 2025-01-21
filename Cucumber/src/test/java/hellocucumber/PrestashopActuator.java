@@ -7,13 +7,24 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PrestashopActuator {
-    private static WebDriver driver;
-    private static WebDriverWait wait;
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    public PrestashopActuator(){
+        // Set the path of the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\Administrator\\2025-mbt-s\\Selenium\\chromedriver.exe" );
+        WebDriverManager.chromedriver().setup();  // This will download the right version of ChromeDriver
+
+        // Create an instance of ChromeDriver and WebDriverWait
+        this.driver = new ChromeDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 seconds wait
+    }
 
     public void initSessionAsUser(String webDriver, String path){
         // webDriver = "webdriver.chrome.driver"

@@ -5,7 +5,8 @@ import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assertions.*;
 
 public class StepDefinitions {
-    
+    private PrestashopActuator prestashopActuator = new PrestashopActuator();
+
     // $$*TODO* explain what this step does$$
     @Given("an example scenario")
     public void anExampleScenario() {
