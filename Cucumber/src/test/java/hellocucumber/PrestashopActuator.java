@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -18,12 +19,20 @@ public class PrestashopActuator {
 
     public PrestashopActuator(){
         // Set the path of the ChromeDriver executable
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\Administrator\\2025-mbt-s\\Selenium\\chromedriver.exe" );
-        WebDriverManager.chromedriver().setup();  // This will download the right version of ChromeDriver
+        // System.setProperty("webdriver.chrome.driver","C:\\Users\\Administrator\\2025-mbt-s\\Selenium\\chromedriver.exe" );
+        // Use WebDriverManager to set up ChromeDriver
+        String pathToChromedriver = "C:\\Users\\Administrator\\2025-mbt-s\\Selenium\\chromedriver.exe";
+        String chromeVersion = "131.0.6778";
 
-        // Create an instance of ChromeDriver and WebDriverWait
+        WebDriverManager.chromedriver().driverVersion(chromeVersion).setup();
+        System.setProperty("webdriver.chrome.driver", pathToChromedriver);
+
+        // Initialize WebDriver with options
         this.driver = new ChromeDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 seconds wait
+
+        // Set up WebDriverWait
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
     }
 
     public void initSessionAsUser(String webDriver, String path){
