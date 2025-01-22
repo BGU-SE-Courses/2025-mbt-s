@@ -16,9 +16,8 @@ function UsrAddingProduct(session, quantity){
     Ctrl.doSleep(1000);
     click(xpathUser.addToCartButton, 10000);
     click(xpathUser.continueShoppingButton, 10000);
-    Ctrl.doSleep(5000);
+    Ctrl.doSleep(500);
     sync({request: Event("End(UsrAddingProduct)")});
-
 
   }
 }
