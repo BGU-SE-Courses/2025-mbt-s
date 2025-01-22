@@ -1,15 +1,19 @@
 // @provengo summon selenium
 
-bthread("UsrLogin", function () {
-  let s = new SeleniumSession("UsrLogin");
+/**
+ * This story open a new browser window of login to PrestaShop website,
+ * choose product from catalog,
+ * choosing a quantity from this product to buy,
+ * adding the product to the wishlist.
+ * */
+bthread("UsrAction", function () {
+  let s = new SeleniumSession("UsrAction");
   s.start(URL)
   UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
   UsrAddingProduct(s, '3');
-
-  // goToInformation(session.user, s);
-  // changeUserName(session.user, s, credentials.user[index]);
 })
 
+bthread("AdminAction")
 // bthread("UsrAddingProduct", function (){
 //   let s = new SeleniumSession("UsrAddingProduct");
 // })

@@ -22,6 +22,8 @@ function UsrAddingProduct(session, quantity){
   }
 }
 
+
+
 // function composeQuery(session, data) {
 //   session.writeText(xpaths.searchWindow.searchInput, data.text)
 // }
