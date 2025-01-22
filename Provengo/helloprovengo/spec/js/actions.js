@@ -22,29 +22,24 @@ function UsrAddingProduct(session, quantity){
   }
 }
 
+function AdminLogin(session, data){
+  with (session){
+    sync({request: Event("Begin(AdminLogin)")});
+    writeText(xpathAdmin.email, data.username);
+    writeText(xpathAdmin.password, data.password);
+    click(xpathAdmin.logInButton);
+    sync({request: Event("End(AdminLogin)")});
+  }
+}
 
+function AdminChanging(session){
+  with(session){
 
-// function composeQuery(session, data) {
-//   session.writeText(xpaths.searchWindow.searchInput, data.text)
-// }
+  }
+}
+// Feature: Admin reduces the quantity of a product to less than X
 //
-// function startSearch(session) {
-//   with(session) {
-//     click(xpaths.searchWindow.searchButton)
-//   }
-// }
-//
-// function feelLucky(session) {
-//   with(session) {
-//     click(xpaths.searchWindow.feelingLuckyButton)
-//   }
-// }
-//
-// function login(session, data){
-//   session.waitForVisibility(xpathUser.email, 1000)
-//   session.writeText(xpathUser.email, data.username)
-//   session.waitForVisibility(xpathUser.password, 1000)
-//   session.writeText(xpathUser.password, data.password)
-//   // session.waitForVisibility(xpaths.searchWindow)
-//   session.click(xpaths.searchWindow.searchButton, 100)
-// }
+// Scenario: Admin reduces the quantity of a product to less than X
+// Given the admin is signed in
+// When the admin reduces the quantity of a product to less than X
+// Then the product is removed from the inventory
