@@ -19,6 +19,6 @@ bthread("AdminAction", function (){
   let s = new SeleniumSession("AdminAction");
   s.start(adminURL)
   AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
-  AdminChanging(s);
+  AdminChanging(s, '-3');
   s.close()
 })

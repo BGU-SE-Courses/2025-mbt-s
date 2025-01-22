@@ -32,8 +32,20 @@ function AdminLogin(session, data){
   }
 }
 
-function AdminChanging(session){
+function AdminChanging(session, quantityToReduce){
   with(session){
+    sync({request: Event("Begin(AdminChanging)")});
+    sync({request: Event("End(AdminLogin)")})
+    // click(xpathAdmin.menuButton, 5000);
+    click(xpathAdmin.catalogButton);
+    click(xpathAdmin.productsButton, 5000);
+    click(xpathAdmin.userProduct, 5000);
+    click(xpathAdmin.stockButton, 5000);
+    writeText(xpathAdmin.quantityChangeCell, quantityToReduce, clearBeforeWrite=true);
+    click(xpathAdmin.saveButton, 5000);
+    click(xpathAdmin.productButtonAfterChange, 5000);
+    click(xpathAdmin.newQuantityButton, 5000);
+    sync({request: Event("End(AdminChanging)")});
 
   }
 }
