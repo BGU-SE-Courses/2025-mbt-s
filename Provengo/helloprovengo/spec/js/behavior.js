@@ -14,11 +14,17 @@ bthread("UsrAction", function () {
   s.close()
 })
 
+/**
+ * This story opens a new browser window of login to PrestaShop admin homepage,
+ * choose the same product the customer chose,
+ * decrease the quantity of this product to less than the customer added to wishlist,
+ * save the changes in catalog.
+ * */
 bthread("AdminAction", function (){
   sync({waitFor: Event("End(UsrAddingProduct)")});
   let s = new SeleniumSession("AdminAction");
   s.start(adminURL)
   AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
-  AdminChanging(s, '-3');
+  AdminChanging(s, '-270');
   s.close()
 })

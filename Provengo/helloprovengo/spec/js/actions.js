@@ -14,8 +14,12 @@ function UsrAddingProduct(session, quantity){
     click(xpathUser.product, 5000);
     writeText(xpathUser.quantityCell, quantity, clearBeforeWrite=true);
     Ctrl.doSleep(1000);
-    click(xpathUser.addToCartButton, 10000);
-    click(xpathUser.continueShoppingButton, 10000);
+    click(xpathUser.addToWishlistButton, 10000);
+    click(xpathUser.chooseMyWishlist, 10000);
+    click(xpathUser.goToProfileButton, 10000);
+    click(xpathUser.wishlistButton, 10000);
+    click(xpathUser.chooseList, 10000);
+    // Observe the product in wishlist
     Ctrl.doSleep(500);
     sync({request: Event("End(UsrAddingProduct)")});
 
@@ -25,6 +29,7 @@ function UsrAddingProduct(session, quantity){
 function AdminLogin(session, data){
   with (session){
     sync({request: Event("Begin(AdminLogin)")});
+    sync({request: Event("End(UsrAddingProduct)")})
     writeText(xpathAdmin.email, data.username);
     writeText(xpathAdmin.password, data.password);
     click(xpathAdmin.logInButton);
@@ -36,7 +41,7 @@ function AdminChanging(session, quantityToReduce){
   with(session){
     sync({request: Event("Begin(AdminChanging)")});
     sync({request: Event("End(AdminLogin)")})
-    // click(xpathAdmin.menuButton, 5000);
+    Ctrl.doSleep(500);
     click(xpathAdmin.catalogButton);
     click(xpathAdmin.productsButton, 5000);
     click(xpathAdmin.userProduct, 5000);
@@ -49,9 +54,3 @@ function AdminChanging(session, quantityToReduce){
 
   }
 }
-// Feature: Admin reduces the quantity of a product to less than X
-//
-// Scenario: Admin reduces the quantity of a product to less than X
-// Given the admin is signed in
-// When the admin reduces the quantity of a product to less than X
-// Then the product is removed from the inventory
