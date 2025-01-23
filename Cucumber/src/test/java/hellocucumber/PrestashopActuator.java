@@ -4,57 +4,30 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class PrestashopActuator {
-    private static WebDriver driver;
-    private static WebDriverWait wait;
-    private Xpath xpath = new Xpath();
+    private static WebDriver driver;  // web driver
+    private static WebDriverWait wait;  // web driver wait
+    private Xpath xpath = new Xpath();  // a Xpath dictionary for all the web element paths
 
 
-    public static void userSetup() {
-        String webDriver = "webdriver.chrome.driver";
-        // Path to ChromeDriver executable
-        String path = "C:\\Users\\natal\\OneDrive - post.bgu.ac.il\\Third\\QA\\2025-mbt-s\\Selenium\\chromedriver.exe";
-
-        // System.setProperty(webDriver, path);
-
-        driver = new ChromeDriver();
-
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
+    public void userSetup() {
+        this.driver = new ChromeDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        // open the login path
         driver.get("http://localhost:8080/login?back=http%3A%2F%2Flocalhost%3A8080%2F");
-    }
-//    public static void initSessionAsUser(){
-//        String webDriver = "webdriver.chrome.driver";
-//        // Path to ChromeDriver executable
-//        String path = "C:\\Users\\natal\\OneDrive - post.bgu.ac.il\\Third\\QA\\2025-mbt-s\\Selenium\\chromedriver.exe";
-//
-//        // Suppress ChromeDriver logging for cleaner console output
-//        System.setProperty("webdriver.chrome.silentOutput", "true");
-//        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(java.util.logging.Level.OFF);
-//
-//        System.setProperty(webDriver, path);
-//        driver = new ChromeDriver();
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
-//
-//        // Navigate to the login page URL
-//        driver.get("http://localhost/myshop/he/%D7%9B%D7%A0%D7%99%D7%A1%D7%94?back=http%3A%2F%2Flocalhost%2Fmyshop%2Fhe%2Fwomen%2F2-9-brown-bear-printed-sweater.html");
-//        driver.manage().window().setPosition(new Point(300, 5));
-//        driver.manage().window().maximize();
-//        System.out.println("Driver setup finished for - " + driver.getTitle());
-
-
-//    }
-
-    public void goToLogin(){
-        // locate and click on web element -> login
-        driver.findElement(By.xpath(xpath.dictUseCase_1.get("SPAN: Sign in"))).click();
     }
 
     public void enterLoginInfo(String email, String password) {
+        /**
+         * String email - email for login
+         * String password - password for login
+         * The function enters the user credential and login
+         */
         // locate the username input box and enter username
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath.dictUseCase_1.get("INPUT: (email)")))).sendKeys(email);
         // locate the password input box and enter password
@@ -69,24 +42,7 @@ public class PrestashopActuator {
         }
     }
 
-    public void addProductToWishlist(int quantity) {
-        // scroll down to find element
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,250)", "");
-        // locate and click on the wanted product
-        driver.findElement(By.xpath(xpath.dictUseCase_1.get("IMG:\n"))).click();
-        // scroll down again
-        // find the quantity input box and enter quantity
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath(xpath.dictUseCase_1.get("INPUT: QUANTITY"))
-        )).sendKeys(String.valueOf(quantity));        // locate and click on web element -> add to wishlist
-        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: add to wishlist"))).click();
-        // choose "My Wishlist" from the dropdown
-        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: my wishlist"))).click();
-    }
-
-    public int checkProductAdded(){
-        // Refresh the page
-        driver.navigate().refresh();
+    public void checkProductNotAddedPreviously() {
         // click on the username to go to profile
         driver.findElement(By.xpath(xpath.dictUseCase_1.get("user"))).click();
         // click on the wishlists
@@ -94,11 +50,98 @@ public class PrestashopActuator {
         // click on my wishlist
         driver.findElement(By.xpath(xpath.dictUseCase_1.get("my wishlist"))).click();
 
-        WebElement quantity_element = driver.findElement(By.xpath(xpath.dictUseCase_1.get("quantity")));
-//
-//        int actual_quantity = quantity_element.getText();
-////        print(f"נמצאה כמות: {actual_quantity}")
-//        return int(actual_quantity);
-        return 0;
+        // scroll down to find element
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,250)", "");
+
+        try {
+            WebElement quantity_element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath(xpath.dictUseCase_1.get("quantity"))));
+        } catch (Exception e){
+            // navigate to the home page by pressing the img
+            driver.findElement(By.xpath(xpath.dictUseCase_1.get("IMG: home page"))).click();
+            //driver.get("http://localhost:8080/");
+            return;  // item is not in the wishlist
+        }
+
+        // else, item was found in the wishlist and need to be removed
+        // click on the delete button from the xpath
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: delete"))).click();
+        // click remove for confirmation
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: remove"))).click();
+        // return to the home page
+        driver.get("http://localhost:8080/");
+    }
+
+    public void addProductToWishlist(int quantity) {
+        /**
+         * int quantity - the quantity of the product to add to the wishlist
+         * This function add a product to My Wishlist with the specified quantity
+         */
+        // scroll down to find element
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,250)", "");
+        // locate and click on the wanted product
+        // wait until the element is visible:
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(xpath.dictUseCase_1.get("MUG:best is yet to come"))
+        )).click();
+
+        // find the quantity input box and enter quantity
+
+        WebElement quantityInput = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(xpath.dictUseCase_1.get("INPUT: QUANTITY"))
+        ));
+        // Perform triple-click on the input field
+        Actions actions = new Actions(driver);
+        // Perform click three times to simulate a triple-click
+        actions.click(quantityInput).click(quantityInput).click(quantityInput).perform();        // Clear the existing text
+        // quantityInput.clear();
+        // Send the new string
+        quantityInput.sendKeys(String.valueOf(quantity));
+
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: add to wishlist"))).click();
+        // choose "My Wishlist" from the dropdown
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("BUTTON: my wishlist"))).click();
+    }
+
+    public String checkProductAdded(){
+        // Refresh the page
+        driver.navigate().refresh();
+        try {
+            Thread.sleep(100);
+        }
+        catch (Exception e){
+
+        }
+
+        // click on the username to go to profile
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("user"))).click();
+        // click on the wishlists
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("my wishlists"))).click();
+        try {
+            Thread.sleep(100);
+        }
+        catch (Exception e){
+
+        }
+        // click on my wishlist
+        driver.findElement(By.xpath(xpath.dictUseCase_1.get("my wishlist"))).click();
+
+        // scroll down to find element
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,100)", "");
+
+        // wait until visibility of the quantity element
+        WebElement quantity_element = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(xpath.dictUseCase_1.get("quantity"))
+        ));
+
+        String actual_quantity = quantity_element.getText();
+        // print the quantity for debugging
+        System.out.println("The actual quantity is: " + actual_quantity);
+        return actual_quantity;
+    }
+
+    public void closeDriver() {
+        // close the driver
+        driver.quit();
     }
 }
