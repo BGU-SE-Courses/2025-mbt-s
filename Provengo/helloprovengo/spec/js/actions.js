@@ -1,6 +1,6 @@
 function UsrLogin(session, data) {
   with (session) {
-    sync({request: Event("Begin(UsrLogin)")});// Begin adminLogin
+    sync({request: Event("Begin(UsrLogin)")});// Begin UsrLogin
     writeText(xpathUser.email, data.username);
     writeText(xpathUser.password, data.password);
     click(xpathUser.signInButton);
@@ -10,26 +10,26 @@ function UsrLogin(session, data) {
 
 function UsrAddingProduct(session, quantity){
   with (session){
-    sync({request: Event("Begin(UsrAddingProduct)")});// Begin adminLogin
-    click(xpathUser.product, 5000);
+    sync({request: Event("Begin(UsrAddingProduct)")}); //Begin user action
+    // User cannot add anything to wishlist before done to log in first
+    sync({request: Event("End(UsrLogin)")});
+    click(xpathUser.product, 500);
     writeText(xpathUser.quantityCell, quantity, clearBeforeWrite=true);
-    Ctrl.doSleep(1000);
-    click(xpathUser.addToWishlistButton, 10000);
-    click(xpathUser.chooseMyWishlist, 10000);
-    click(xpathUser.goToProfileButton, 10000);
-    click(xpathUser.wishlistButton, 10000);
-    click(xpathUser.chooseList, 10000);
+    Ctrl.doSleep(100); //wait for product adding to wishlist
+    click(xpathUser.addToWishlistButton, 1000);
+    click(xpathUser.chooseMyWishlist, 1000);
+    click(xpathUser.goToProfileButton, 1000);
+    click(xpathUser.wishlistButton, 1000);
+    click(xpathUser.chooseList, 1000);
     // Observe the product in wishlist
     Ctrl.doSleep(500);
     sync({request: Event("End(UsrAddingProduct)")});
-
   }
 }
 
 function AdminLogin(session, data){
   with (session){
     sync({request: Event("Begin(AdminLogin)")});
-    sync({request: Event("End(UsrAddingProduct)")})
     writeText(xpathAdmin.email, data.username);
     writeText(xpathAdmin.password, data.password);
     click(xpathAdmin.logInButton);
@@ -40,14 +40,13 @@ function AdminLogin(session, data){
 function AdminChanging(session, quantityToReduce){
   with(session){
     sync({request: Event("Begin(AdminChanging)")});
-    sync({request: Event("End(AdminLogin)")})
-    Ctrl.doSleep(500);
     click(xpathAdmin.catalogButton);
-    click(xpathAdmin.productsButton, 5000);
-    click(xpathAdmin.userProduct, 5000);
-    click(xpathAdmin.stockButton, 5000);
+    click(xpathAdmin.productsButton, 500);
+    click(xpathAdmin.userProduct, 500);
+    click(xpathAdmin.stockButton, 500);
     writeText(xpathAdmin.quantityChangeCell, quantityToReduce, clearBeforeWrite=true);
-    click(xpathAdmin.saveButton, 5000);
+    click(xpathAdmin.saveButton, 500);
+    // wait for updated page
     click(xpathAdmin.productButtonAfterChange, 5000);
     click(xpathAdmin.newQuantityButton, 5000);
     sync({request: Event("End(AdminChanging)")});
