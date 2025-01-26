@@ -16,6 +16,9 @@ public class PrestashopActuator {
 
 
     public void userSetup() {
+        /**
+         * This function sets up the driver and opens the login page
+         */
         this.driver = new ChromeDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         // open the login path
@@ -43,12 +46,18 @@ public class PrestashopActuator {
     }
 
     public void checkProductNotAddedPreviously() {
+        /**
+         * This function checks if the product is in the wishlist, if it is, it deletes it
+         */
         // click on the username to go to profile
         driver.findElement(By.xpath(xpath.dictUseCase_1.get("user"))).click();
         // click on the wishlists
         driver.findElement(By.xpath(xpath.dictUseCase_1.get("my wishlists"))).click();
         // click on my wishlist
-        driver.findElement(By.xpath(xpath.dictUseCase_1.get("my wishlist"))).click();
+        // wait until the element is visible
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(xpath.dictUseCase_1.get("my wishlist"))
+        )).click();
 
         // scroll down to find element
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,250)", "");
@@ -104,6 +113,9 @@ public class PrestashopActuator {
     }
 
     public String checkProductAdded(){
+        /**
+         * This function checks if the product was added to the wishlist with the correct quantity
+         */
         // Refresh the page
         driver.navigate().refresh();
         try {
@@ -141,6 +153,9 @@ public class PrestashopActuator {
     }
 
     public void closeDriver() {
+        /**
+         * This function closes the driver
+         */
         // close the driver
         driver.quit();
     }

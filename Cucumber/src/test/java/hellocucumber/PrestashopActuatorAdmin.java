@@ -16,6 +16,9 @@ public class PrestashopActuatorAdmin {
     private int productActualQuantity;  // init a test quantity x
 
     public void adminSetup() {
+        /**
+         * This function sets up the driver and opens the login page
+         */
         this.driver = new ChromeDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         // open the login path
@@ -43,7 +46,11 @@ public class PrestashopActuatorAdmin {
     }
 
     public void changeProductQuantityLessThanX(int x) {
-        driver.manage().window().maximize();
+        /**
+         * int x - the quantity to change the product to less than
+         * The function changes the product quantity to less than x
+         */
+        driver.manage().window().maximize();  // the catalog button is not visible without maximizing the window
         // click on catalog
         // wait until the element is visible
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath.dictUseCase_2.get("BUTTON: catalog")))).click();
@@ -78,6 +85,9 @@ public class PrestashopActuatorAdmin {
     }
 
     public boolean checkProductQuantityUpdated() {
+        /**
+         * The function checks if the product quantity was updated to less than x
+         */
         // check the in stock quantity
         WebElement quantity_element = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(xpath.dictUseCase_2.get("STOCK: quantity"))));
@@ -87,6 +97,9 @@ public class PrestashopActuatorAdmin {
     }
 
     public void closeDriver() {
+        /**
+         * The function closes the driver
+         */
         // close the driver
         driver.quit();
     }
