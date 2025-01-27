@@ -10,6 +10,11 @@ bthread("AdminAction", function (){
   // sync({waitFor: Event("End(UsrAddingProduct)")});
   let s = new SeleniumSession("AdminAction");
   s.start(adminURL)
+  // הפעלת קוד מותאם להגדלת חלון הדפדפן
+  s.perform(() => {
+    let driver = s.getDriver(); // השגת ה-WebDriver
+    driver.manage().window().setRect({ width: 1920, height: 1080 });
+    });
   AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
   AdminNavigation(s);
   AdminChange(s, '-298');
@@ -26,6 +31,7 @@ bthread("AdminAction", function (){
 bthread("UsrAction", function () {
   let s = new SeleniumSession("UsrAction");
   s.start(userURL)
+  s.driver.manage().window().maximize();
   UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
   UsrChooseProductAndQuantity(s, '3');
   UsrAddToWishlist(s);
