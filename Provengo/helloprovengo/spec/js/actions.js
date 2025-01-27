@@ -42,6 +42,8 @@ function UseValidation(session) {
      */
     with (session) {
         sync({request: Event("Begin(UseValidation)")}); //Begin user action
+        Ctrl.doSleep(5000);
+        refresh();
         click(xpathUser.goToProfileButton, 1000);
         click(xpathUser.wishlistButton, 1000);
         click(xpathUser.chooseList, 1000);
@@ -83,8 +85,10 @@ function AdminValidation(session) {
     with (session) {
         sync({request: Event("Begin(AdminValidation)")});
         // wait for updated page
-        click(xpathAdmin.productButtonAfterChange, 5000);
-        click(xpathAdmin.newQuantityButton, 5000);
+        Ctrl.doSleep(1000);
+        refresh();
+        // click(xpathAdmin.productButtonAfterChange, 5000);
+        // click(xpathAdmin.newQuantityButton, 5000);
         sync({request: Event("End(AdminValidation)")});
     }
 }

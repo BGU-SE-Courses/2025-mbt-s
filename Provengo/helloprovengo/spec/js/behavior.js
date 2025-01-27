@@ -14,7 +14,6 @@ bthread("AdminAction", function (){
   AdminNavigation(s);
   AdminChange(s, '-298');
   AdminValidation(s);
-  UseValidation(s);
   s.close()
 })
 
@@ -30,6 +29,7 @@ bthread("UsrAction", function () {
   UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
   UsrChooseProductAndQuantity(s, '3');
   UsrAddToWishlist(s);
+  UseValidation(s);
   s.close()
 })
 
