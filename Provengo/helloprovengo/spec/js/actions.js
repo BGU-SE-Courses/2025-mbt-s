@@ -4,7 +4,6 @@ function UsrLogin(session, data) {
      */
     with (session) {
         sync({request: Event("Begin(UsrLogin)")});// Begin UsrLogin
-        fullscreen()
         writeText(xpathUser.email, data.username);
         writeText(xpathUser.password, data.password);
         click(xpathUser.signInButton);
@@ -48,9 +47,7 @@ function UseValidation(session) {
         click(xpathUser.goToProfileButton, 1000);
         click(xpathUser.wishlistButton, 1000);
         click(xpathUser.chooseList, 1000);
-        Ctrl.doSleep(500);
-        // click(xpathUser.clearWishListButton, 1000);
-        // click(xpathUser.removeFromWishlist, 1000);
+        Ctrl.doSleep(5000);
         sync({request: Event("End(UseValidation)")});
     }
 }
@@ -59,7 +56,6 @@ function UseValidation(session) {
 function AdminLogin(session, data) {
     with (session) {
         sync({request: Event("Begin(AdminLogin)")});
-        fullscreen()
         writeText(xpathAdmin.email, data.username);
         writeText(xpathAdmin.password, data.password);
         click(xpathAdmin.logInButton);
@@ -93,7 +89,7 @@ function AdminValidation(session) {
         // wait for updated page
         Ctrl.doSleep(1000);
         refresh();
-        Ctrl.doSleep(100);
+        Ctrl.doSleep(1000);
         sync({request: Event("End(AdminValidation)")});
     }
 }
@@ -102,7 +98,7 @@ function AdminClearTest(session) {
     with (session) {
         sync({request: Event("Begin(AdminClearTest)")});
         writeText(xpathAdmin.quantityChangeCell, '298', clearBeforeWrite = true);
-        click(xpathAdmin.saveButton, 500);
+        click(xpathAdmin.saveButton, 1000);
         sync({request: Event("End(AdminClearTest)")});
     }
 }
