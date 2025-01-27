@@ -4,7 +4,7 @@ function UsrLogin(session, data) {
      */
     with (session) {
         sync({request: Event("Begin(UsrLogin)")});// Begin UsrLogin
-        maximizeWindow();
+        // maximizeWindow();
         writeText(xpathUser.email, data.username);
         writeText(xpathUser.password, data.password);
         click(xpathUser.signInButton);
@@ -39,7 +39,7 @@ function UsrAddToWishlist(session) {
 
 function UseValidation(session) {
     /**
-     * Go to wishlist and validate adding the quantity
+     * Go to wishlist and validate adding the quantity, than clear the wishlist for the next test
      */
     with (session) {
         sync({request: Event("Begin(UseValidation)")}); //Begin user action
@@ -48,12 +48,16 @@ function UseValidation(session) {
         click(xpathUser.goToProfileButton, 1000);
         click(xpathUser.wishlistButton, 1000);
         click(xpathUser.chooseList, 1000);
+        Ctrl.doSleep(500);
+        // click(xpathUser.clearWishListButton, 1000);
+        // click(xpathUser.removeFromWishlist, 1000);
         sync({request: Event("End(UseValidation)")});
     }
 }
 
+
 function AdminLogin(session, data) {
-    session.maximizeWindow();
+    // session.maximizeWindow();
     with (session) {
         sync({request: Event("Begin(AdminLogin)")});
         // maximizeWindow();
@@ -90,8 +94,16 @@ function AdminValidation(session) {
         // wait for updated page
         Ctrl.doSleep(1000);
         refresh();
-        // click(xpathAdmin.productButtonAfterChange, 5000);
-        // click(xpathAdmin.newQuantityButton, 5000);
+        Ctrl.doSleep(100);
         sync({request: Event("End(AdminValidation)")});
+    }
+}
+
+function AdminClearTest(session) {
+    with (session) {
+        sync({request: Event("Begin(AdminClearTest)")});
+        writeText(xpathAdmin.quantityChangeCell, '298', clearBeforeWrite = true);
+        click(xpathAdmin.saveButton, 500);
+        sync({request: Event("End(AdminClearTest)")});
     }
 }

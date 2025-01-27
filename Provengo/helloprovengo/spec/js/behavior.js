@@ -7,19 +7,20 @@
  * save the changes in catalog.
  * */
 bthread("AdminAction", function (){
-  // sync({waitFor: Event("End(UsrAddingProduct)")});
-  let s = new SeleniumSession("AdminAction");
-  s.start(adminURL)
-  // הפעלת קוד מותאם להגדלת חלון הדפדפן
-  s.perform(() => {
-    let driver = s.getDriver(); // השגת ה-WebDriver
-    driver.manage().window().setRect({ width: 1920, height: 1080 });
-    });
-  AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
-  AdminNavigation(s);
-  AdminChange(s, '-298');
-  AdminValidation(s);
-  s.close()
+    // sync({waitFor: Event("End(UsrAddingProduct)")});
+    let s = new SeleniumSession("AdminAction");
+    s.start(adminURL)
+//   // הפעלת קוד מותאם להגדלת חלון הדפדפן
+//   s.perform(() => {
+//     let driver = s.getDriver(); // השגת ה-WebDriver
+//     driver.manage().window().setRect({ width: 1920, height: 1080 });
+//     });
+    AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
+    AdminNavigation(s);
+    AdminChange(s, '-298');
+    AdminValidation(s);
+    AdminClearTest(s);
+    s.close()
 })
 
 /**
@@ -29,14 +30,14 @@ bthread("AdminAction", function (){
  * adding the product to the wishlist.
  * */
 bthread("UsrAction", function () {
-  let s = new SeleniumSession("UsrAction");
-  s.start(userURL)
-  s.driver.manage().window().maximize();
-  UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
-  UsrChooseProductAndQuantity(s, '3');
-  UsrAddToWishlist(s);
-  UseValidation(s);
-  s.close()
+    let s = new SeleniumSession("UsrAction");
+    s.start(userURL)
+    // s.driver.manage().window().maximize();
+    UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
+    UsrChooseProductAndQuantity(s, '3');
+    UsrAddToWishlist(s);
+    UseValidation(s);
+    s.close()
 })
 
 
@@ -45,8 +46,8 @@ bthread("UsrAction", function () {
  * */
 bthread("UserCannotAddUntilFinishLogin", function () {
     sync({
-      waitFor: Event("End(UsrLogin)"),
-      block: Event("Begin(UsrChooseProductAndQuantity)")
+        waitFor: Event("End(UsrLogin)"),
+        block: Event("Begin(UsrChooseProductAndQuantity)")
     })
 })
 
@@ -107,5 +108,15 @@ bthread("AdminCannotActUntilFinishLogin", function () {
     sync({
         waitFor: Event("End(AdminChange)"),
         block: Event("Begin(AdminValidation)")
+    })
+})
+
+/**
+ * This story made for preventing the manager to clear test before user validation complete.
+ * */
+bthread("AdminCannotClearUntilValidateTest", function () {
+    sync({
+        waitFor: Event("End(UseValidation)"),
+        block: Event("Begin(AdminClearTest)")
     })
 })

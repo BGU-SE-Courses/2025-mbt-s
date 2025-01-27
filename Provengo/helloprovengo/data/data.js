@@ -16,7 +16,9 @@ const xpathUser = {
   chooseMyWishlist: '/html/body/main/footer/div[2]/div/div/div[4]/div/div/div/div[2]/div/ul/li/p',
   goToProfileButton: '/html/body/main/header/nav/div/div/div/div[2]/div[2]/div/a[2]/span',
   wishlistButton: '/html/body/main/section/div/div/div/section/section/div/div/a[5]/span/i',
-  chooseList: '/html/body/main/section/div/div/div/section/div/section/div/ul/li/a/p'
+  chooseList: '/html/body/main/section/div/div/div/section/div/section/div/ul/li/a/p',
+  clearWishListButton: '/html/body/main/section/div/div/div/section/div/section/ul/li/div/div[2]/button[2]/i',
+  removeFromWishlist: '/html/body/main/footer/div[2]/div/div/div[5]/div/div/div/div[3]/button[2]',
 }
 
 const xpathAdmin = {
