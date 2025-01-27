@@ -4,7 +4,7 @@ function UsrLogin(session, data) {
      */
     with (session) {
         sync({request: Event("Begin(UsrLogin)")});// Begin UsrLogin
-        // maximizeWindow();
+        fullscreen()
         writeText(xpathUser.email, data.username);
         writeText(xpathUser.password, data.password);
         click(xpathUser.signInButton);
@@ -57,10 +57,9 @@ function UseValidation(session) {
 
 
 function AdminLogin(session, data) {
-    // session.maximizeWindow();
     with (session) {
         sync({request: Event("Begin(AdminLogin)")});
-        // maximizeWindow();
+        fullscreen()
         writeText(xpathAdmin.email, data.username);
         writeText(xpathAdmin.password, data.password);
         click(xpathAdmin.logInButton);
