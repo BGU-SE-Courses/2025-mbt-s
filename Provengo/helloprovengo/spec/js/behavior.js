@@ -23,6 +23,7 @@ bthread("AdminAction", function (){
     s.close()
 })
 
+
 /**
  * This story open a new browser window of login to PrestaShop website,
  * choose product from catalog,
