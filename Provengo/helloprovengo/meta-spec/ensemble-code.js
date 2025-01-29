@@ -4,16 +4,11 @@
  * List of events "of interest" that we want test suites to cover.
  */
 const GOALS = [
-    any(/Howdy/),
-    any(/Mars/),
-    Ctrl.markEvent("Classic!")
+    any(/End\(UsrChooseProductAndQuantity\)/),
+    any(/Begin\(AdminChange\)/),
+    any(/Begin\(UsrAddToWishlist\)/),
 ];
 
-const makeGoals = function(){
-    return [ [ any(/Howdy/), any(/Venus/) ],
-             [ any(/Mars/) ],
-             [ Ctrl.markEvent("Classic!") ] ];
-}
 
 /**
  * Ranks test suites by how many events from the GOALS array were met.
@@ -30,10 +25,8 @@ function rankByMetGoals( ensemble ) {
         unreachedGoals.push(GOALS[idx]);
     }
 
-    for (let testIdx = 0; testIdx < ensemble.length; testIdx++) {
-        let test = ensemble[testIdx];
-        for (let eventIdx = 0; eventIdx < test.length; eventIdx++) {
-            let event = test[eventIdx];
+    for (let test of ensemble) {
+        for (let event of test) {
             for (let ugIdx=unreachedGoals.length-1; ugIdx >=0; ugIdx--) {
                 let unreachedGoal = unreachedGoals[ugIdx];
                 if ( unreachedGoal.contains(event) ) {
@@ -44,6 +37,16 @@ function rankByMetGoals( ensemble ) {
     }
 
     return GOALS.length-unreachedGoals.length;
+}
+
+function two_ways_ranking_function(ensemble) {
+    let set = new Set();
+
+    for (var test of ensemble)
+        for (var i=0; i<test.length-1; i++)
+            set.add(`${test[i]},${test[i+1]}`);
+
+    return set.size;
 }
 
 /**
