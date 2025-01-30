@@ -48,12 +48,21 @@ function UseValidation(session) {
         click(xpathUser.wishlistButton, 1000);
         click(xpathUser.chooseList, 1000);
         Ctrl.doSleep(5000);
+        // Asserts that the quantity of the product in the wishlist is 3
+        assertText(xpathUser.quantityInWishlist, 'Quantity : 3')
+        // need to delete the product for next test:
+        click(xpathUser.deleteProdFromWishlist, 500);
+        click(xpathUser.confirmRemoval, 500);
+        Ctrl.doSleep(5000);
         sync({request: Event("End(UseValidation)")});
     }
 }
 
 
 function AdminLogin(session, data) {
+    /**
+     * Logs in to the admin panel using the provided session and credentials.
+     */
     with (session) {
         sync({request: Event("Begin(AdminLogin)")});
         writeText(xpathAdmin.email, data.username);
@@ -64,6 +73,7 @@ function AdminLogin(session, data) {
 }
 
 function AdminNavigation(session) {
+    /**Navigates through the admin panel of PrestaShop.*/
     with (session) {
         sync({request: Event("Begin(AdminNavigation)")});
         click(xpathAdmin.catalogButton);
@@ -75,6 +85,7 @@ function AdminNavigation(session) {
 }
 
 function AdminChange(session, quantityToReduce) {
+    /**Changes the quantity of a product in the admin panel.*/
     with (session) {
         sync({request: Event("Begin(AdminChange)")});
         writeText(xpathAdmin.quantityChangeCell, quantityToReduce, clearBeforeWrite = true);
@@ -84,17 +95,24 @@ function AdminChange(session, quantityToReduce) {
 }
 
 function AdminValidation(session) {
+    /**Function to perform admin validation within a session.*/
     with (session) {
         sync({request: Event("Begin(AdminValidation)")});
         // wait for updated page
         Ctrl.doSleep(1000);
         refresh();
+        // Asserts that the quantity of the product after edit is 2
+        assertText(xpathAdmin.newQuantityButton, '2')
         Ctrl.doSleep(1000);
         sync({request: Event("End(AdminValidation)")});
     }
 }
 
 function AdminClearTest(session) {
+    /**
+     * This function performs a test action in the admin panel.
+     * It writes a specific quantity value to a cell and then saves the changes.
+     */
     with (session) {
         sync({request: Event("Begin(AdminClearTest)")});
         writeText(xpathAdmin.quantityChangeCell, '298', clearBeforeWrite = true);

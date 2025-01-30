@@ -5,16 +5,11 @@
  * choose the same product the customer chose,
  * decrease the quantity of this product to less than the customer added to wishlist,
  * save the changes in catalog.
+ * Then after the test validation, returns to the original quantity to clear the test.
  * */
-bthread("AdminAction", function (){
-    // sync({waitFor: Event("End(UsrAddingProduct)")});
+bthread("AdminAction", function () {
     let s = new SeleniumSession("AdminAction");
     s.start(adminURL)
-//   // הפעלת קוד מותאם להגדלת חלון הדפדפן
-//   s.perform(() => {
-//     let driver = s.getDriver(); // השגת ה-WebDriver
-//     driver.manage().window().setRect({ width: 1920, height: 1080 });
-//     });
     AdminLogin(s, {username: 'demo@prestashop.com', password: 'prestashop_demo'});
     AdminNavigation(s);
     AdminChange(s, '-298');
@@ -29,11 +24,11 @@ bthread("AdminAction", function (){
  * choose product from catalog,
  * choosing a quantity from this product to buy,
  * adding the product to the wishlist.
+ * Then after the test validation, clear the user's wishlist for the next test.
  * */
 bthread("UsrAction", function () {
     let s = new SeleniumSession("UsrAction");
     s.start(userURL)
-    // s.driver.manage().window().maximize();
     UsrLogin(s, {username: 'natallie.mir@gmail.com', password: 'natallie1234'});
     UsrChooseProductAndQuantity(s, '3');
     UsrAddToWishlist(s);

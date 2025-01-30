@@ -2,31 +2,65 @@
 This is a repository for the system-testing assignment of the Software Quality Engineering course at the [Ben-Gurion University](https://in.bgu.ac.il/), Israel.
 
 ## Assignment Description
-In this assignment, we tested an open-source software called [$$*TODO* software name$$](https://address-of-the-project.com).
+In this assignment, we tested an open-source software called PrestaShop(https://demo.prestashop.com/#/en/front).
 
-$$*TODO* Add some general description about the software$$
+## Online Shopping Platform Description
+
+The online shopping platform is a basic e-commerce website designed for both customers and administrators.
+
+### For Customers:
+- They can log in using a username and password.
+- The platform offers a product catalog organized into categories, allowing customers to browse available items.
+- Users can add products to their shopping cart for immediate purchase or save them to a "favorites" list for future consideration.
+- Once ready, customers can proceed to checkout to place an order online.
+
+### For Administrators:
+- The platform includes a separate management interface to oversee the product catalog.
+- Administrators can view all products available for sale, organized by categories.
+- They can update product details such as descriptions, prices, stock quantities, and other information.
+- This system provides tools to manage inventory effectively and ensure accurate product information is displayed to customers.
+
+The website offers a comprehensive solution for online shopping and catalog management, suitable for a streamlined e-commerce experience. This description refers to a demo PrestaShop website used in the context of a software quality assurance course.
+
 
 ## Installation
-$$*TODO* Write instructions on how to install the software and prepare the testing environment$$
+In addition to the basic installations, which we completed by following the course team's guidelines, we also installed Docker Desktop. Using Docker Desktop, we successfully set up the websites we worked on locally.
+### Docker Desktop Installation Instructions
+If you need to install Docker Desktop, follow these steps:
+1. **Download Docker Desktop**:
+   - Visit the official [Docker website](https://www.docker.com/products/docker-desktop) and download the appropriate version for your operating system (Windows, macOS, or Linux).
+2. **Install Docker Desktop**:
+   - Run the downloaded installer and follow the on-screen instructions. Make sure to enable WSL integration if you're using Windows with WSL.
+3. **Verify the Installation**:
+   - After installation, open Docker Desktop and ensure it runs correctly.
+   - Test the installation by opening a terminal and running the command:
+     ```bash
+     docker --version
+     ```
+     You should see the installed version of Docker.
+
+We followed these steps to ensure our local environment was properly configured to work with the provided project files. For further guidance, refer to Docker's official documentation.
 
 ## What we tested
-$$*TODO* Add a description of the module and the user stories that you chose to test.
-For example, in the case of the Moodle example, you can write something like this:
+### User Story 1: Adding Products to Wishlist with Quantity `x`
+**Preconditions:**
+- The user is signed in to the customer website.
+- The chosen product exists in the catalog.
+- The chosen product has not been added to the wishlist before.
 
-We tested the quiz module that allows for creating and taking quizzes. We chose to test the following user stories: 
+**Expected Outcome:**
+- The product is added to the wishlist with the specified quantity (`x`).
 
-*User story:* A teacher adds a new quiz to the course with two yes/no questions
+---
 
-*Preconditions:* There is a course with a teacher
+### User Story 2: Admin Changes the Quantity of a Product to Less Than `x`
+**Preconditions:**
+- The admin is signed in to the admin's website.
+- The chosen product exists in the catalog.
 
-*Expected outcome:* The quiz is added to the course.
+**Expected Outcome:**
+- The product quantity is updated to the new quantity inputted by the admin.
 
-*User story:* A students attempts a quiz and answers correctly.
-
-*Preconditions:* There is a course with a quiz with two yes/no questions and the quiz grade is calculated automatically and the grade is visible to the students upon submission.
-
-*Expected outcome:* The student receives 100.
-$$
 
 ## How we tested
 We used two different testing methods:
@@ -38,15 +72,3 @@ Each of the testing methods is elaborated in its own directory.
 ## Results
 Update all README.md files (except for d-e, see Section 1). Specifically, replace all $$*TODO*…$$ according to the instructions inside the $$.
 
-## Detected Bugs
-We detected the following bugs:
-
-1. Bug 1: 
-   1. General description: ...
-   2. Steps to reproduce: ...
-   3. Expected result: ...
-   4. Actual result: ...
-   5. Link to the bug report: (you are encouraged to report the bug to the developers of the software)
-2. Bug 2: ...
-
-$$*TODO* if you did not detect the bug, you should delete this section$$  
